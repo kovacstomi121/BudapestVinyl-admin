@@ -1,5 +1,4 @@
-import prismadb from "@/lib/prismadb";
-
+import { prismadb } from "@/lib/prismadb";
 import { GenreForm } from "./components/genre-form";
 
 const GenrePage = async ({ params }: { params: { genreId: string } }) => {

@@ -1,35 +1,43 @@
-import { NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs';
+import { NextResponse } from "next/server";
+import nextAuth, { getServerSession } from "next-auth";
 
-import prismadb from '@/lib/prismadb';
+import { authOptions } from "../auth/[...nextauth]/options";
+import { prismadb } from "@/lib/prismadb";
 
-export async function POST(
-  req: Request,
-) {
+export async function POST(req: Request) {
   try {
-    const { userId } = auth();
+    const session = await getServerSession(authOptions);
     const body = await req.json();
 
     const { name } = body;
 
-    if (!userId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+    if (!session) {
+      return new NextResponse("Nincs bejelentkezve", { status: 403 });
     }
 
     if (!name) {
-      return new NextResponse("Name is required", { status: 400 });
+      return new NextResponse("Név megadása szükséges", { status: 400 });
     }
 
-    const store = await prismadb.store.create({
-      data: {
-        name,
-        userId,
-      }
-    });
-  
-    return NextResponse.json(store);
+    if (session.user.email) {
+      // Itt már biztosan van érvényes email cím
+      const store = await prismadb.store.create({
+        data: {
+          name,
+          user: {
+            connect: { id: session.user.id, email: session.user.email },
+          },
+        },
+      });
+
+      return NextResponse.json(store);
+    } else {
+      return new NextResponse("Hiányzó email cím a felhasználótól", {
+        status: 400,
+      });
+    }
   } catch (error) {
-    console.log('[STORES_POST]', error);
-    return new NextResponse("Internal error", { status: 500 });
+    console.log("[STORES_POST]", error);
+    return new NextResponse("Belső hiba", { status: 500 });
   }
-};
+}

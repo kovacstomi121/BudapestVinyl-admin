@@ -106,7 +106,7 @@ export default function StoreSwitcher({
                 }}
               >
                 <PlusCircle className="mr-2 h-5 w-5" />
-                Create Store
+                Üzlet létrehozása
               </CommandItem>
             </CommandGroup>
           </CommandList>

@@ -44,9 +44,9 @@ export const StoreModal = () => {
       setLoading(true);
       const response = await axios.post("/api/stores", values);
       window.location.assign(`/${response.data.id}`);
-      toast.success("Store created");
+      toast.success("Üzlet létrehozva");
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Valami hiba történt");
     } finally {
       setLoading(false);
     }
@@ -54,8 +54,8 @@ export const StoreModal = () => {
 
   return (
     <Modal
-      title="Create store"
-      description="Add a new store to manage products and categories."
+      title="Üzlet létrehozása"
+      description="Hozz létre új üzletet"
       isOpen={storeModal.isOpen}
       onClose={storeModal.onClose}
     >
@@ -69,11 +69,11 @@ export const StoreModal = () => {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Name</FormLabel>
+                      <FormLabel>Név</FormLabel>
                       <FormControl>
                         <Input
                           disabled={loading}
-                          placeholder="E-Commerce"
+                          placeholder="Bolt"
                           {...field}
                         />
                       </FormControl>
@@ -87,10 +87,10 @@ export const StoreModal = () => {
                     variant="outline"
                     onClick={storeModal.onClose}
                   >
-                    Cancel
+                    Kilépés
                   </Button>
                   <Button disabled={loading} type="submit">
-                    Continue
+                    Folytatás
                   </Button>
                 </div>
               </form>

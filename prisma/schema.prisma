@@ -1,25 +1,43 @@
 generator client {
   provider = "prisma-client-js"
 }
-
 datasource db {
   provider = "mysql"
   url = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
-model Store {
-  id              String    @id @default(uuid())
-  name            String
-  userId          String
-  billboards      Billboard[] @relation("StoreToBillboard")
-  categories      Category[] @relation("StoreToCategory")
-  products        Product[]  @relation("StoreToProduct")
-  genres          Genre[]     @relation("StoreToGenre")
-  orders          Order[]     @relation("StoreToOrder")
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
+
+model User {
+  id       String    @id @default(uuid())
+  username String   @unique
+  email    String   @unique
+  password String
+  store    Store[]  @relation("StoreToUser")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
+
+model Store {
+  id          String    @id @default(uuid())
+  name        String
+  userId      String
+  user        User      @relation("StoreToUser", fields: [userId], references: [id], onDelete: Cascade)
+  billboards  Billboard[] @relation("StoreToBillboard")
+  categories  Category[] @relation("StoreToCategory")
+  products    Product[]  @relation("StoreToProduct")
+  genres      Genre[]     @relation("StoreToGenre")
+  orders      Order[]     @relation("StoreToOrder")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([userId])
+}
+
+
+
+
+
 
 model Billboard {
   id          String @id @default(uuid())
@@ -67,6 +85,7 @@ model Product {
 
   @@index([storeId])
   @@index([genreId])
+
 }
 
 model Order {
@@ -93,6 +112,7 @@ model OrderItem {
 
   @@index([orderId])
   @@index([productId])
+
 }
 
 model Genre {

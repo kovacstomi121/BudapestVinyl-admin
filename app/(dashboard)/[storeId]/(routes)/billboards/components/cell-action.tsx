@@ -1,5 +1,3 @@
-"use client";
-
 import axios from "axios";
 import { useState } from "react";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
@@ -18,19 +16,23 @@ import { AlertModal } from "@/components/modals/alert-modal";
 
 import { BillboardColumn } from "./columns";
 
+// A CellAction komponens deklarációja
 interface CellActionProps {
   data: BillboardColumn;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
+  // Router és params hook-ok használata
   const router = useRouter();
   const params = useParams();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // A hirdetőtábla törlését végző függvény
   const onConfirm = async () => {
     try {
       setLoading(true);
+      // A hirdetőtábla törlése a szerverről
       await axios.delete(`/api/${params.storeId}/billboards/${data.id}`);
       toast.success("Hirdetőtábla törölve");
       router.refresh();
@@ -44,6 +46,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     }
   };
 
+  // Az aktuális hirdetőtábla azonosítójának vágólapra másolását végző függvény
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
     toast.success("A hirdetőtábla azonosítója a vágólapra másolva.");
@@ -66,9 +69,11 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Opciók</DropdownMenuLabel>
+          {/* Az aktuális hirdetőtábla azonosítójának másolása */}
           <DropdownMenuItem onClick={() => onCopy(data.id)}>
             <Copy className="mr-2 h-4 w-4" /> Id másolása
           </DropdownMenuItem>
+          {/* A hirdetőtábla szerkesztésére való átirányítás */}
           <DropdownMenuItem
             onClick={() =>
               router.push(`/${params.storeId}/billboards/${data.id}`)
@@ -76,6 +81,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           >
             <Edit className="mr-2 h-4 w-4" /> Frissít
           </DropdownMenuItem>
+          {/* A hirdetőtábla törlését indító függvény meghívása */}
           <DropdownMenuItem onClick={() => setOpen(true)}>
             <Trash className="mr-2 h-4 w-4" /> Töröl
           </DropdownMenuItem>

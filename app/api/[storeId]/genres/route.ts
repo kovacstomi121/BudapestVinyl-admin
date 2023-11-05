@@ -1,40 +1,39 @@
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs";
-
-import prismadb from "@/lib/prismadb";
+import { getServerSession } from "next-auth";
+import { prismadb } from "@/lib/prismadb";
 
 export async function POST(
   req: Request,
   { params }: { params: { storeId: string } }
 ) {
   try {
-    const { userId } = auth();
+    const session = await getServerSession();
 
     const body = await req.json();
 
     const { name } = body;
 
-    if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 403 });
+    if (!session?.user) {
+      return new NextResponse("Hitelesítetlen", { status: 403 });
     }
 
     if (!name) {
-      return new NextResponse("Name is required", { status: 400 });
+      return new NextResponse("Név szükséges", { status: 400 });
     }
 
     if (!params.storeId) {
-      return new NextResponse("Store id is required", { status: 400 });
+      return new NextResponse("Bolt azonosító szükséges", { status: 400 });
     }
 
     const storeByUserId = await prismadb.store.findFirst({
       where: {
         id: params.storeId,
-        userId,
+        userId: session.user.id,
       },
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 405 });
+      return new NextResponse("Engedély nélkül", { status: 405 });
     }
 
     const genre = await prismadb.genre.create({
@@ -46,8 +45,8 @@ export async function POST(
 
     return NextResponse.json(genre);
   } catch (error) {
-    console.log("[GERNES_POST]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    console.log("[GENRES_POST]", error);
+    return new NextResponse("Belső hiba", { status: 500 });
   }
 }
 
@@ -57,7 +56,7 @@ export async function GET(
 ) {
   try {
     if (!params.storeId) {
-      return new NextResponse("Store id is required", { status: 400 });
+      return new NextResponse("Bolt azonosító szükséges", { status: 400 });
     }
 
     const genres = await prismadb.genre.findMany({
@@ -69,6 +68,6 @@ export async function GET(
     return NextResponse.json(genres);
   } catch (error) {
     console.log("[GENRES_GET]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    return new NextResponse("Belső hiba", { status: 500 });
   }
 }

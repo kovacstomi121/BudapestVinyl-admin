@@ -4,12 +4,17 @@ import { useEffect } from "react";
 import { useParams } from "next/navigation";
 
 import { useStoreModal } from "@/hooks/use-store-modal";
+import SetupLayout from "../layout";
 
 const SetupPage = () => {
+  // `useStoreModal` hook segítségével lekéri az `onOpen` függvényt.
   const onOpen = useStoreModal((state) => state.onOpen);
+
+  // `useStoreModal` hook segítségével lekéri az `isOpen` állapotot.
   const isOpen = useStoreModal((state) => state.isOpen);
 
   useEffect(() => {
+    // Ellenőrzi, hogy az `isOpen` állapot `false`-e. Ha igen, akkor az `onOpen` függvényt meghívja.
     if (!isOpen) {
       onOpen();
     }
@@ -17,5 +22,5 @@ const SetupPage = () => {
 
   return null;
 };
- 
+
 export default SetupPage;

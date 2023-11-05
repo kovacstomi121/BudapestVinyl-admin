@@ -1,9 +1,8 @@
 import { format } from "date-fns";
 
-import prismadb from "@/lib/prismadb";
-
 import { GenreColumn } from "./components/columns";
 import { GenreClient } from "./components/client";
+import { prismadb } from "@/lib/prismadb";
 
 const GenrePage = async ({ params }: { params: { storeId: string } }) => {
   const genres = await prismadb.genre.findMany({

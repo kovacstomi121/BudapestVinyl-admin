@@ -1,6 +1,6 @@
-"use client";
+"use client"; // Importáljuk a "use client" modult, ami valószínűleg egy egyedi modul vagy szolgáltatás.
 
-import { Plus } from "lucide-react";
+import { Plus } from "lucide-react"; // Az "lucide-react" modulból importáljuk a "Plus" ikont.
 import { useParams, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -11,13 +11,14 @@ import { ApiList } from "@/components/ui/api-list";
 
 import { columns, BillboardColumn } from "./columns";
 
+// A "BillboardClient" komponensnek átadott adatok struktúrájának meghatározása.
 interface BillboardClientProps {
   data: BillboardColumn[];
 }
 
 export const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
-  const params = useParams();
-  const router = useRouter();
+  const params = useParams(); // Az aktuális útvonal paramétereinek lekérése a "useParams" hook segítségével.
+  const router = useRouter(); // Az útvonalváltás funkciók eléréséhez használt "useRouter" hook.
 
   return (
     <>
@@ -32,11 +33,11 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
           <Plus className="mr-2 h-4 w-4" /> Hozzáadás
         </Button>
       </div>
-      <Separator />
-      <DataTable searchKey="label" columns={columns} data={data} />
+      <Separator /> // Elválasztó vonal beszúrása a felhasználói felületen.
+      <DataTable searchKey="label" columns={columns} data={data} /> //
       <Heading title="API" description="API-hívások hirdetőtáblákhoz" />
       <Separator />
-      <ApiList entityName="billboards" entityIdName="billboardId" />
+      <ApiList entityName="billboards" entityIdName="billboardId" /> //
     </>
   );
 };

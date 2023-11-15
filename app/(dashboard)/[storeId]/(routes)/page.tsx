@@ -61,6 +61,24 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
           </Card>
           {/* Hasonló kártyák következnek itt a különböző adatokkal. */}
         </div>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Eladások</CardTitle>
+            <CreditCard className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">+{salesCount}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Raktáron</CardTitle>
+            <Package className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stockCount}</div>
+          </CardContent>
+        </Card>
 
         {/* Az Overview komponens jeleníti meg a grafikus áttekintést a data prop alapján. */}
         <Card className="col-span-4">

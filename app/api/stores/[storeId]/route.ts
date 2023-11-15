@@ -12,7 +12,7 @@ export async function PATCH(
 
     const { name } = body;
 
-    if (!session) {
+    if (!session?.user) {
       return new NextResponse("Nem hitelesített", { status: 403 });
     }
 

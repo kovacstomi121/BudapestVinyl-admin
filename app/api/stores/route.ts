@@ -11,7 +11,7 @@ export async function POST(req: Request) {
 
     const { name } = body;
 
-    if (!session) {
+    if (!session?.user) {
       return new NextResponse("Nincs bejelentkezve", { status: 403 });
     }
 

@@ -15,11 +15,9 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
-import { prismadb } from "@/lib/prismadb";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import router from "next/navigation";
-import checkUserStore from "@/services/checkUserStore";
+import { useState } from "react";
+import axios, { AxiosError } from "axios";
+import toast from "react-hot-toast";
 
 const FormSchema = z.object({
   email: z.string().min(1, "Email megadása kötelező").email("Helytelen email"),
@@ -31,6 +29,7 @@ const FormSchema = z.object({
 
 const SignInForm = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -45,11 +44,27 @@ const SignInForm = () => {
       password: values.password,
       redirect: false,
     });
-
     if (signInData?.ok) {
-      await checkUserStore();
-    } else if (signInData?.error) {
-      console.log(signInData.error);
+      try {
+        setLoading(true);
+        // Szerveroldali bejelentkezési kísérlet
+        const response = await axios.post("/api/login", values);
+
+        // Kliensoldali irányítás
+        window.location.assign(`/${response.data.id}`);
+      } catch (error) {
+        const axiosError = error as AxiosError;
+
+        toast.error(`Bejelentkezés sikertelen. Hiba: ${axiosError.message}`);
+        console.error(
+          "Hiba a bejelentkezés során:",
+          axiosError.response || axiosError
+        );
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      toast.error("Hibás adatok");
     }
   };
 

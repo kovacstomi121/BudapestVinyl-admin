@@ -2,8 +2,6 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { prismadb } from "@/lib/prismadb";
-import AuthProvider from "@/components/AuthProvider";
-import { useSession } from "next-auth/react";
 
 export default async function SetupLayout({
   children,
@@ -13,22 +11,22 @@ export default async function SetupLayout({
   const session = await getServerSession(authOptions);
 
   if (!session?.user) {
-    redirect("/sign-in");
-    return null;
+    await redirect("/sign-in");
+    return null; // Fontos: Üres válasz küldése a további végrehajtás megakadályozása érdekében
   }
 
-  const userId = session.user.id; // Kinyerjük a felhasználó azonosítóját
-
+  // Megvárjuk a redirect befejezését, ha van store
   const store = await prismadb.store.findFirst({
     where: {
-      userId,
+      userId: session?.user.id,
     },
   });
 
   if (store) {
-    redirect(`${store.id}`);
-    return null;
+    await redirect(`/${store.id}`);
+    return null; // Fontos: Üres válasz küldése a további végrehajtás megakadályozása érdekében
   }
-  // Ha eljut ide, akkor a felhasználónak van boltja, és betölthetjük a kívánt oldalt
+
+  // Ha eljut ide, akkor a felhasználónak nincs boltja, és megengedjük a children tartalom megjelenítését
   return <>{children}</>;
 }

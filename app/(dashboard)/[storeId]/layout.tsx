@@ -7,6 +7,7 @@ import AuthProvider from "@/components/AuthProvider";
 
 export default async function DashboardLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
   params: { storeId: string };
@@ -19,6 +20,7 @@ export default async function DashboardLayout({
 
   const store = await prismadb.store.findFirst({
     where: {
+      id: params.storeId,
       userId: session.user.id,
     },
   });

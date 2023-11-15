@@ -73,7 +73,7 @@ export const authOptions: NextAuthOptions = {
         return {
           ...token,
           username: user.username,
-
+          // store: user.store,
           // Itt hozzáadhatod a boltot a tokenhez, ha a user objektum tartalmazza a boltot
         };
       }

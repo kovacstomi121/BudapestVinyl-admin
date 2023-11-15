@@ -104,7 +104,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  Nincs találat
                 </TableCell>
               </TableRow>
             )}
@@ -118,7 +118,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          Előző
         </Button>
         <Button
           variant="outline"
@@ -126,7 +126,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          Next
+          Következő
         </Button>
       </div>
     </div>

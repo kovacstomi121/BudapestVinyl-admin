@@ -1,6 +1,6 @@
-"use client"; // Importáljuk a "use client" modult, ami valószínűleg egy egyedi modul vagy szolgáltatás.
+"use client";
 
-import { Plus } from "lucide-react"; // Az "lucide-react" modulból importáljuk a "Plus" ikont.
+import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -17,8 +17,8 @@ interface BillboardClientProps {
 }
 
 export const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
-  const params = useParams(); // Az aktuális útvonal paramétereinek lekérése a "useParams" hook segítségével.
-  const router = useRouter(); // Az útvonalváltás funkciók eléréséhez használt "useRouter" hook.
+  const params = useParams();
+  const router = useRouter();
 
   return (
     <>

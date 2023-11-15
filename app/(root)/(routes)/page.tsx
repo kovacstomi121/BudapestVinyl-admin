@@ -1,10 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useParams } from "next/navigation";
-
 import { useStoreModal } from "@/hooks/use-store-modal";
-import SetupLayout from "../layout";
 
 const SetupPage = () => {
   // `useStoreModal` hook segítségével lekéri az `onOpen` függvényt.

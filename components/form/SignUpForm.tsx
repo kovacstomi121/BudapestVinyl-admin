@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const FormSchema = z
   .object({
@@ -63,9 +64,10 @@ const SignUpForm = () => {
     if (response.ok) {
       // Sikeres regisztráció esetén továbblépés
       router.push("/sign-in");
+      toast.success("Felhasználó létrehozva");
     } else {
       // Hibakezelés sikertelen regisztráció esetén
-      console.error("Regisztráció sikertelen");
+      toast.error("Regisztráció sikertelen");
     }
   };
 

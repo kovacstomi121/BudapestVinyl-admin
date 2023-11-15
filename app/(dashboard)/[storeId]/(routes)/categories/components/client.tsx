@@ -16,23 +16,26 @@ interface CategoriesClientProps {
   data: CategoryColumn[];
 }
 
-export const CategoriesClient: React.FC<CategoriesClientProps> = ({
-  data
-}) => {
+export const CategoriesClient: React.FC<CategoriesClientProps> = ({ data }) => {
   const params = useParams();
   const router = useRouter();
 
   return (
     <>
       <div className="flex items-center justify-between">
-        <Heading title={`Categories (${data.length})`} description="Manage categories for your store" />
-        <Button onClick={() => router.push(`/${params.storeId}/categories/new`)}>
-          <Plus className="mr-2 h-4 w-4" /> Add New
+        <Heading
+          title={`Kategóriák (${data.length})`}
+          description="Kezelje üzlete hirdetőtábláit"
+        />
+        <Button
+          onClick={() => router.push(`/${params.storeId}/categories/new`)}
+        >
+          <Plus className="mr-2 h-4 w-4" /> Hozzáadás
         </Button>
       </div>
       <Separator />
       <DataTable searchKey="name" columns={columns} data={data} />
-      <Heading title="API" description="API Calls for Categories" />
+      <Heading title="API" description="API-hívások kategóriákhoz" />
       <Separator />
       <ApiList entityName="categories" entityIdName="categoryId" />
     </>

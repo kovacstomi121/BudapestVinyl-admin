@@ -33,11 +33,11 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     try {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
-      toast.success("Category deleted.");
+      toast.success("Kategória törölve.");
       router.refresh();
     } catch (error) {
       toast.error(
-        "Make sure you removed all products using this category first."
+        "Győződj meg róla, hogy eltávolítottad az összes ebben a kategóriában lévő terméket."
       );
     } finally {
       setOpen(false);
@@ -47,7 +47,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Category ID copied to clipboard.");
+    toast.success("Kategória azonosító másolva a vágólapra.");
   };
 
   return (
@@ -61,24 +61,24 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
+            <span className="sr-only">Menü megnyitása</span>
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuLabel>Műveletek</DropdownMenuLabel>
           <DropdownMenuItem onClick={() => onCopy(data.id)}>
-            <Copy className="mr-2 h-4 w-4" /> Copy Id
+            <Copy className="mr-2 h-4 w-4" /> Id másolása
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
               router.push(`/${params.storeId}/categories/${data.id}`)
             }
           >
-            <Edit className="mr-2 h-4 w-4" /> Update
+            <Edit className="mr-2 h-4 w-4" /> Frissítés
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setOpen(true)}>
-            <Trash className="mr-2 h-4 w-4" /> Delete
+            <Trash className="mr-2 h-4 w-4" /> Törlés
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

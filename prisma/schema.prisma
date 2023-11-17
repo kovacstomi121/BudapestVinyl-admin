@@ -13,7 +13,7 @@ model User {
   username String   @unique
   email    String   @unique
   password String
-  store    Store?  @relation("StoreToUser")
+  store    Store[]  @relation("StoreToUser")
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }

@@ -21,7 +21,7 @@ model User {
 model Store {
   id          String    @id @default(uuid())
   name        String
-  userId      String
+  userId      String    @unique
   user        User      @relation("StoreToUser", fields: [userId], references: [id], onDelete: Cascade)
   billboards  Billboard[] @relation("StoreToBillboard")
   categories  Category[] @relation("StoreToCategory")

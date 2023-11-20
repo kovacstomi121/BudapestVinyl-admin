@@ -1,4 +1,4 @@
-"use client;
+"use client";
 import { useSession, signOut, getSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import StoreSwitcher from "@/components/store-switcher";

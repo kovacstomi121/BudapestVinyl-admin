@@ -44,7 +44,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
               <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold overflow-hidden text-sm">
+              <div className="text-base sm:text-xs font-bold overflow-hidden">
                 {/* Teljes bevétel megjelenítése formázva */}
                 {formatter.format(totalRevenue)}
               </div>

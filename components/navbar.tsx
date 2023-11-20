@@ -1,3 +1,4 @@
+"use client;
 import { useSession, signOut, getSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import StoreSwitcher from "@/components/store-switcher";
@@ -27,16 +28,27 @@ const Navbar = async () => {
       userId,
     },
   });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="border-b">
       <div className="flex h-16 items-center px-4">
         <StoreSwitcher items={stores} />
-        <MainNav className="mx-6" />
-        <div className="ml-auto flex items-center space-x-4">
-          <ThemeToggle />
-          {session?.user ? <UserAccountNav /> : null}
-        </div>
+        <ThemeToggle />
+        <button
+          className="lg:hidden text-white p-2"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          ☰
+        </button>
+        {mobileMenuOpen && (
+          <div className="lg:hidden flex flex-col items-center space-y-2 mt-4">
+            <MainNav className="mx-6" />
+            <div className="ml-auto flex items-center space-x-4">
+              {session?.user ? <UserAccountNav /> : null}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

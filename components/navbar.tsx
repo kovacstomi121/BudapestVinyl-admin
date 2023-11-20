@@ -1,80 +1,32 @@
-"use client";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { cn } from "@/lib/utils";
+import { useSession, signOut, getSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 import StoreSwitcher from "@/components/store-switcher";
 import { MainNav } from "@/components/main-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { prismadb } from "@/lib/prismadb";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import UserAccountNav from "./UserAccountNav";
-import { PrismaClient, Store } from "@prisma/client";
+import { NextApiRequest, NextApiResponse } from "next";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const Navbar = () => {
-  const router = useRouter();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [stores, setStores] = useState<Store[]>([]);
+const Navbar = async () => {
+  const session = await getServerSession();
 
-  useEffect(() => {
-    const fetchStores = async () => {
-      const session = await getServerSession();
+  if (!session) {
+    redirect("/sign-in");
+  }
 
-      if (!session) {
-        router.push("/sign-in");
-        return null;
-      }
+  const userId = session.user.id;
 
-      const userId = session.user.id;
-
-      const storesData = await prismadb.store.findMany({
-        where: {
-          userId,
-        },
-      });
-
-      setStores(storesData);
-    };
-
-    fetchStores();
-  }, [router]);
-
-  const handleMobileToggle = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
-
-  const handleLinkClick = () => {
-    setMobileMenuOpen(false);
-  };
-
-  const renderRoutes = (stores: Store[]) => {
-    return stores.map((store) => (
-      <Link
-        key={store.id}
-        href={`/${store.id}`}
-        className={cn(
-          "text-sm font-medium transition-colors",
-          router.pathname === `/${store.id}`
-            ? "text-black dark:text-white"
-            : "text-muted-foreground"
-        )}
-        onClick={handleLinkClick}
-      >
-        {store.name}
-      </Link>
-    ));
-  };
-
-  const renderMobileMenu = (stores: Store[]) => {
-    return (
-      <div className="lg:hidden flex flex-col items-center space-y-2 mt-4">
-        {renderRoutes(stores)}
-        <UserAccountNav />
-      </div>
-    );
-  };
+  const stores = await prismadb.store.findMany({
+    where: {
+      userId,
+    },
+  });
 
   return (
     <div className="border-b">
@@ -83,13 +35,7 @@ const Navbar = () => {
         <MainNav className="mx-6" />
         <div className="ml-auto flex items-center space-x-4">
           <ThemeToggle />
-          <button
-            className="lg:hidden text-white p-2"
-            onClick={handleMobileToggle}
-          >
-            ☰
-          </button>
-          {mobileMenuOpen && renderMobileMenu(stores)}
+          {session?.user ? <UserAccountNav /> : null}
         </div>
       </div>
     </div>

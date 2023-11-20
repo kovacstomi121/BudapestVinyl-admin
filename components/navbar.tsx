@@ -5,30 +5,41 @@ import StoreSwitcher from "@/components/store-switcher";
 import { MainNav } from "@/components/main-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { prismadb } from "@/lib/prismadb";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import UserAccountNav from "./UserAccountNav";
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const Navbar = async () => {
-  const session = await getServerSession();
-
-  if (!session) {
-    redirect("/sign-in");
-  }
-
-  const userId = session.user.id;
-
-  const stores = await prismadb.store.findMany({
-    where: {
-      userId,
-    },
-  });
+const Navbar = () => {
+  const [session, loading] = useSession();
+  const [stores, setStores] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const initializeData = async () => {
+      if (!session) {
+        redirect("/sign-in");
+      }
+
+      const serverSession = await getServerSession();
+      const userId = serverSession.user.id;
+
+      const storesData = await prismadb.store.findMany({
+        where: {
+          userId,
+        },
+      });
+
+      setStores(storesData);
+    };
+
+    if (!loading) {
+      initializeData();
+    }
+  }, [session, loading]);
 
   return (
     <div className="border-b">
@@ -51,6 +62,11 @@ const Navbar = async () => {
         )}
       </div>
     </div>
+  );
+};
+
+export default Navbar;
+
   );
 };
 

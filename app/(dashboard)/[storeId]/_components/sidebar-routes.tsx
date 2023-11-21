@@ -6,10 +6,13 @@ import { SidebarItem } from "../_components/sidebar-item";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/providers/theme-provider";
 
+// SidebarRoutes komponens definíciója
 export const SidebarRoutes = () => {
+  // Használjuk a Next.js useRouter és usePathname hookjait
   const pathname = usePathname();
   const params = useParams();
 
+  // Definiáljuk a navigációs útvonalakat és azokhoz tartozó ikonokat
   const routes = [
     {
       icon: BarChart,
@@ -55,8 +58,10 @@ export const SidebarRoutes = () => {
     },
   ];
 
+  // Visszaadjuk a JSX-t, ami a SidebarRoutes kinézetét definiálja
   return (
     <div className="flex flex-col w-full">
+      {/* A navigációs útvonalak térképezése SidebarItem komponensre */}
       {routes.map((route) => (
         <SidebarItem
           key={route.href}

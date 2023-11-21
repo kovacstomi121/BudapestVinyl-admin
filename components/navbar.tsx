@@ -10,6 +10,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import UserAccountNav from "./UserAccountNav";
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
+import { MobileSidebar } from "@/app/(dashboard)/[storeId]/_components/mobile-sidebar";
 
 const prisma = new PrismaClient();
 
@@ -31,8 +32,9 @@ const Navbar = async () => {
   return (
     <div className="border-b">
       <div className="flex h-16 items-center px-4">
+        <MobileSidebar />
         <StoreSwitcher items={stores} />
-        <MainNav className="mx-6" />
+
         <div className="ml-auto flex items-center space-x-4">
           <ThemeToggle />
           {session?.user ? <UserAccountNav /> : null}

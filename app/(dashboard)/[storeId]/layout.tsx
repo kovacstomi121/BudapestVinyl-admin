@@ -1,5 +1,5 @@
 import { redirect, useRouter } from "next/navigation";
-import { Navbar } from "@/components/navbar";
+import Navbar from "@/components/navbar";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { prismadb } from "@/lib/prismadb";

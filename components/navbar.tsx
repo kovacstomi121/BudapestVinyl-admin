@@ -1,4 +1,4 @@
-import { useSession, signOut, getSession } from "next-auth/react";
+	import { useSession, signOut, getSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import StoreSwitcher from "@/components/store-switcher";
 import { MainNav } from "@/components/main-nav";

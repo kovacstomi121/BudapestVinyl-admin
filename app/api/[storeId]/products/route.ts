@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import { prismadb } from "@/lib/prismadb";
-
+//A böngésző így engedi a weboldalnak, hogy kérést intézzen a domain felé. 
 const corsHeaders = {
   // Engedélyezi bármely eredeti domainről érkező kéréseket
   "Access-Control-Allow-Origin": "*",

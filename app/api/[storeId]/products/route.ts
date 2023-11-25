@@ -91,7 +91,7 @@ export async function POST(
       },
     });
 
-    return NextResponse.json(product);
+    return NextResponse.json(product, { headers: corsHeaders });
   } catch (error) {
     console.log("[PRODUCTS_POST]", error);
     return new NextResponse("Belső hiba", { status: 500 });
@@ -120,7 +120,7 @@ export async function GET(
           { name: query ? { contains: query } : undefined },
           { artist: query ? { contains: query } : undefined },
         ],
-        isFeatured: isFeatured ? true : undefined,
+        isFeatured: true,
         isArchived: false,
       },
       include: {

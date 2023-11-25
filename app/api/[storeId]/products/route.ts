@@ -132,7 +132,7 @@ export async function GET(
       },
     });
 
-    return NextResponse.json(products, { headers: corsHeaders });
+    return NextResponse.json(products);
   } catch (error) {
     console.log("[PRODUCTS_GET]", error);
     return new NextResponse("Belső hiba", { status: 500 });

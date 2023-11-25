@@ -109,8 +109,8 @@ export async function GET(
       where: {
         storeId: params.storeId,
         genreId,
-        name,
-        artist,
+         name: name ? { contains: name } : undefined,
+        artist: artist ? { contains: artist } : undefined,
         isFeatured: isFeatured ? true : undefined,
         isArchived: false,
       },

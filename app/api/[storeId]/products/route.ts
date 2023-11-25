@@ -3,6 +3,14 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import { prismadb } from "@/lib/prismadb";
 
+const corsHeaders = {
+  // Engedélyezi bármely eredeti domainről érkező kéréseket
+  "Access-Control-Allow-Origin": "*",
+  // Engedélyezi a GET, POST, PUT, DELETE, OPTIONS HTTP műveleteket
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  // Engedélyezi a Content-Type és Authorization fejléceket
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
 export async function POST(
   req: Request,
   { params }: { params: { storeId: string } }
@@ -97,8 +105,8 @@ export async function GET(
   try {
     const { searchParams } = new URL(req.url);
     const genreId = searchParams.get("genreId") || undefined;
-    const query = searchParams.get("query") || undefined;// Vegyük fel, hogy a frontend egy "query" paraméterrel küldi a keresést
     const isFeatured = searchParams.get("isFeatured");
+    const query = searchParams.get("query") || undefined; // Vegyük fel, hogy a frontend egy "query" paraméterrel küldi a keresést
 
     if (!params.storeId) {
       return new NextResponse("Bolt azonosító szükséges", { status: 400 });
@@ -108,6 +116,7 @@ export async function GET(
       where: {
         storeId: params.storeId,
         genreId,
+        //Searchbarral való kereséshez
         OR: [
           { name: query ? { contains: query } : undefined },
           { artist: query ? { contains: query } : undefined },
@@ -124,7 +133,7 @@ export async function GET(
       },
     });
 
-    return NextResponse.json(products);
+    return NextResponse.json(products, { headers: corsHeaders });
   } catch (error) {
     console.log("[PRODUCTS_GET]", error);
     return new NextResponse("Belső hiba", { status: 500 });

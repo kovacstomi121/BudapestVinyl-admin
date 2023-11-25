@@ -95,11 +95,9 @@ export async function GET(
   { params }: { params: { storeId: string } }
 ) {
   try {
-   const { searchParams } = new URL(req.url);
+    const { searchParams } = new URL(req.url);
     const genreId = searchParams.get("genreId") || undefined;
-    const name = searchParams.get("name") || undefined;
-    const artist = searchParams.get("artist") || undefined;
-    const isFeatured = searchParams.get("isFeatured");
+    const query = searchParams.get("query") || undefined; // Vegyük fel, hogy a frontend egy "query" paraméterrel küldi a keresést
 
     if (!params.storeId) {
       return new NextResponse("Bolt azonosító szükséges", { status: 400 });
@@ -109,8 +107,10 @@ export async function GET(
       where: {
         storeId: params.storeId,
         genreId,
-         name: name ? { contains: name } : undefined,
-        artist: artist ? { contains: artist } : undefined,
+        OR: [
+          { name: query ? { contains: query } : undefined },
+          { artist: query ? { contains: query } : undefined },
+        ],
         isFeatured: isFeatured ? true : undefined,
         isArchived: false,
       },

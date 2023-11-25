@@ -120,7 +120,7 @@ export async function GET(
           { name: query ? { contains: query } : undefined },
           { artist: query ? { contains: query } : undefined },
         ],
-        isFeatured,
+        isFeatured: true,
         isArchived: false,
       },
       include: {

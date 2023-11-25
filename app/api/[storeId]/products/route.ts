@@ -95,8 +95,10 @@ export async function GET(
   { params }: { params: { storeId: string } }
 ) {
   try {
-    const { searchParams } = new URL(req.url);
+   const { searchParams } = new URL(req.url);
     const genreId = searchParams.get("genreId") || undefined;
+    const name = searchParams.get("name") || undefined;
+    const artist = searchParams.get("artist") || undefined;
     const isFeatured = searchParams.get("isFeatured");
 
     if (!params.storeId) {
@@ -107,6 +109,8 @@ export async function GET(
       where: {
         storeId: params.storeId,
         genreId,
+        name,
+        artist,
         isFeatured: isFeatured ? true : undefined,
         isArchived: false,
       },

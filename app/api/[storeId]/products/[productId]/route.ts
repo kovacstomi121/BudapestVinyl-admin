@@ -136,6 +136,7 @@ export async function PATCH(
       },
       data: {
         name,
+        artist,
         price,
         genreId,
         images: {

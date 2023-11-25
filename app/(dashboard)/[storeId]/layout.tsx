@@ -3,7 +3,6 @@ import Navbar from "@/components/navbar";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { prismadb } from "@/lib/prismadb";
-import AuthProvider from "@/components/AuthProvider";
 import { Sidebar } from "./_components/sidebar";
 
 export default async function DashboardLayout({

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import { prismadb } from "@/lib/prismadb";
-//A böngésző így engedi a weboldalnak, hogy kérést intézzen a domain felé. 
+
 const corsHeaders = {
   // Engedélyezi bármely eredeti domainről érkező kéréseket
   "Access-Control-Allow-Origin": "*",
@@ -105,8 +105,8 @@ export async function GET(
   try {
     const { searchParams } = new URL(req.url);
     const genreId = searchParams.get("genreId") || undefined;
-    const isFeatured = searchParams.get("isFeatured");
     const query = searchParams.get("query") || undefined; // Vegyük fel, hogy a frontend egy "query" paraméterrel küldi a keresést
+    const isFeatured = searchParams.get("isFeatured");
 
     if (!params.storeId) {
       return new NextResponse("Bolt azonosító szükséges", { status: 400 });
@@ -116,7 +116,6 @@ export async function GET(
       where: {
         storeId: params.storeId,
         genreId,
-        //Searchbarral való kereséshez
         OR: [
           { name: query ? { contains: query } : undefined },
           { artist: query ? { contains: query } : undefined },

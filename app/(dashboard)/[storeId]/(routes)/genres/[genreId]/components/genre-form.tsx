@@ -24,23 +24,28 @@ import { Separator } from "@/components/ui/separator";
 import { Heading } from "@/components/ui/heading";
 import { AlertModal } from "@/components/modals/alert-modal";
 
+// Űrlap validációs séma definiálása a zod modullal
 const formSchema = z.object({
   name: z.string().min(1),
 });
 
+// Az űrlap értékeit reprezentáló típus definiálása
 type GenreFormValues = z.infer<typeof formSchema>;
-
 interface GenreFormProps {
   initialData: Genre | null;
 }
 
+// GenreForm komponens definíciója
 export const GenreForm: React.FC<GenreFormProps> = ({ initialData }) => {
+  // Az útvonal és router kezelése a next/navigation modullal
   const params = useParams();
   const router = useRouter();
 
+  // Állapotok inicializálása
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // A komponens címe, leírása, üzenetei, gombfeliratainak beállítása
   const title = initialData ? "Műfaj szerkesztése" : "Műfaj létrehozása";
   const description = initialData
     ? "Műfaj szerkesztése."
@@ -48,6 +53,7 @@ export const GenreForm: React.FC<GenreFormProps> = ({ initialData }) => {
   const toastMessage = initialData ? "Műfaj frissítve" : "Műfaj létrehozva";
   const action = initialData ? "Mentés" : "Létrehoz";
 
+  // React Hook Form használata az űrlapkezeléshez
   const form = useForm<GenreFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
@@ -55,6 +61,7 @@ export const GenreForm: React.FC<GenreFormProps> = ({ initialData }) => {
     },
   });
 
+  // Űrlap elküldésekor lefutó függvény
   const onSubmit = async (data: GenreFormValues) => {
     try {
       setLoading(true);
@@ -76,6 +83,7 @@ export const GenreForm: React.FC<GenreFormProps> = ({ initialData }) => {
     }
   };
 
+  // Műfaj törlésekor lefutó függvény
   const onDelete = async () => {
     try {
       setLoading(true);
@@ -95,12 +103,15 @@ export const GenreForm: React.FC<GenreFormProps> = ({ initialData }) => {
 
   return (
     <>
+      {/* Műfaj törléséhez használt megerősítő modális ablak */}
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
         onConfirm={onDelete}
         loading={loading}
       />
+
+      {/* Űrlap és műveletek megjelenítése */}
       <div className="flex items-center justify-between">
         <Heading title={title} description={description} />
         {initialData && (
@@ -115,6 +126,8 @@ export const GenreForm: React.FC<GenreFormProps> = ({ initialData }) => {
         )}
       </div>
       <Separator />
+
+      {/* Űrlap megjelenítése */}
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -135,6 +148,7 @@ export const GenreForm: React.FC<GenreFormProps> = ({ initialData }) => {
               )}
             />
           </div>
+          {/* Űrlap elküldéséhez szükséges gomb */}
           <Button disabled={loading} className="ml-auto" type="submit">
             {action}
           </Button>

@@ -6,7 +6,9 @@ import { formatter } from "@/lib/utils";
 import { ProductsClient } from "./components/client";
 import { ProductColumn } from "./components/columns";
 
+// Oldal komponense, ami a termékek listáját jeleníti meg
 const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
+  // Termékek lekérdezése az adatbázisból
   const products = await prismadb.product.findMany({
     where: {
       storeId: params.storeId,
@@ -19,6 +21,7 @@ const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
     },
   });
 
+  // A lekért termékek formázása a megfelelő oszlopokhoz
   const formattedProducts: ProductColumn[] = products.map((item) => ({
     id: item.id,
     name: item.name,
@@ -34,6 +37,7 @@ const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
+        {/* A termékek listáját megjelenítő komponens használata */}
         <ProductsClient data={formattedProducts} />
       </div>
     </div>

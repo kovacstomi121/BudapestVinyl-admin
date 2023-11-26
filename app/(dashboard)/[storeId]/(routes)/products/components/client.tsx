@@ -11,6 +11,7 @@ import { ApiList } from "@/components/ui/api-list";
 
 import { ProductColumn, columns } from "./columns";
 
+// ProductsClient komponens definíciója
 interface ProductsClientProps {
   data: ProductColumn[];
 }
@@ -19,9 +20,11 @@ export const ProductsClient: React.FC<ProductsClientProps> = ({ data }) => {
   const params = useParams();
   const router = useRouter();
 
+  // Komponens renderelése
   return (
     <>
       <div className="flex items-center justify-between">
+        {/* Termékek címe és hozzáadás gomb */}
         <Heading
           title={`Termékek (${data.length})`}
           description="Kezelje üzletének termékeit"
@@ -31,7 +34,9 @@ export const ProductsClient: React.FC<ProductsClientProps> = ({ data }) => {
         </Button>
       </div>
       <Separator />
+      {/* Termékek táblázata */}
       <DataTable searchKey="name" columns={columns} data={data} />
+      {/* API hívások címe és listája */}
       <Heading title="API" description="API-hívások termékekért" />
       <Separator />
       <ApiList entityName="products" entityIdName="productId" />

@@ -74,7 +74,7 @@ export default function StoreSwitcher({
         <Command>
           <CommandList>
             <CommandInput placeholder="Bolt keresése..." />
-            <CommandEmpty>No store found.</CommandEmpty>
+            <CommandEmpty>Nem találtunk boltot.</CommandEmpty>
             <CommandGroup heading="Boltok">
               {formattedItems.map((store) => (
                 <CommandItem

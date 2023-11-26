@@ -36,6 +36,7 @@ interface SettingsFormProps {
   initialData: Store;
 }
 
+// Bolt beállítások űrlapkomponense
 export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
@@ -44,24 +45,27 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // Űrlap kezelése a react-hook-form segítségével
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
   });
 
+  // Űrlap elküldése
   const onSubmit = async (data: SettingsFormValues) => {
     try {
       setLoading(true);
       await axios.patch(`/api/stores/${params.storeId}`, data);
       router.refresh();
-      toast.success("Store updated.");
+      toast.success("Bolt frissítve.");
     } catch (error: any) {
-      toast.error("Something went wrong.");
+      toast.error("Valami hiba történt.");
     } finally {
       setLoading(false);
     }
   };
 
+  // Bolt törlése
   const onDelete = async () => {
     try {
       setLoading(true);
@@ -78,8 +82,10 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       setOpen(false);
     }
   };
+
   return (
     <>
+      {/* Törlés megerősítő modális ablak */}
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
@@ -87,6 +93,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
         loading={loading}
       />
       <div className="flex items-center justify-between">
+        {/* Oldal címe és törlés gomb */}
         <Heading
           title="Bolt beállítások"
           description="Üzleti beállítások kezelése"
@@ -101,12 +108,14 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
         </Button>
       </div>
       <Separator />
+      {/* Űrlap */}
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full"
         >
           <div className="grid grid-cols-3 gap-8">
+            {/* Név mező */}
             <FormField
               control={form.control}
               name="name"
@@ -125,12 +134,14 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
               )}
             />
           </div>
+          {/* Mentés gomb */}
           <Button disabled={loading} className="ml-auto" type="submit">
-           Változások mentése
+            Változások mentése
           </Button>
         </form>
       </Form>
       <Separator />
+      {/* API URL megjelenítése */}
       <ApiAlert
         title="NEXT_PUBLIC_API_URL"
         variant="public"

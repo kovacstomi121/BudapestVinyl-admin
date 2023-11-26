@@ -18,6 +18,7 @@ import {
 
 import { ProductColumn } from "./columns";
 
+// CellAction komponens definíciója
 interface CellActionProps {
   data: ProductColumn;
 }
@@ -28,6 +29,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
   const params = useParams();
 
+  // A termék törlésének megerősítése és végrehajtása
   const onConfirm = async () => {
     try {
       setLoading(true);
@@ -42,19 +44,24 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     }
   };
 
+  // A termék ID másolása a vágólapra
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
     toast.success("Termék ID másolva.");
   };
 
+  // Komponens renderelése
   return (
     <>
+      {/* Törlés megerősítését kezelő modális ablak */}
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
         onConfirm={onConfirm}
         loading={loading}
       />
+
+      {/* Dropdown menü a műveletekkel */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
@@ -64,10 +71,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Opciók</DropdownMenuLabel>
+          {/* Termék ID másolása */}
           <DropdownMenuItem onClick={() => onCopy(data.id)}>
             <Copy className="mr-2 h-4 w-4" />
             ID másolása
           </DropdownMenuItem>
+          {/* Termék szerkesztése */}
           <DropdownMenuItem
             onClick={() =>
               router.push(`/${params.storeId}/products/${data.id}`)
@@ -75,6 +84,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           >
             <Edit className="mr-2 h-4 w-4" /> Frissít
           </DropdownMenuItem>
+          {/* Termék törlése */}
           <DropdownMenuItem onClick={() => setOpen(true)}>
             <Trash className="mr-2 h-4 w-4" /> Töröl
           </DropdownMenuItem>

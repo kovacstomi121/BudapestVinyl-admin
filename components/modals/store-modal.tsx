@@ -22,16 +22,21 @@ import {
 import { useStoreModal } from "@/hooks/use-store-modal";
 import { Button } from "@/components/ui/button";
 
+// Az űrlap validációjához használt sémát definiálja
 const formSchema = z.object({
   name: z.string().min(1),
 });
 
+// A StoreModal komponens, ami egy modális ablakban hoz létre új üzletet
 export const StoreModal = () => {
+  // A useStoreModal hook segítségével hozzuk létre a modális ablak kezelését
   const storeModal = useStoreModal();
   const router = useRouter();
 
+  // Állapot, ami jelzi, hogy éppen történik-e adat küldése vagy nem
   const [loading, setLoading] = useState(false);
 
+  // React Hook Form hook használata az űrlap kezeléséhez
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,19 +44,26 @@ export const StoreModal = () => {
     },
   });
 
+  // Az űrlap elküldésekor meghívódó callback függvény
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setLoading(true);
+      // Üzlet létrehozása a szerveren keresztül
       const response = await axios.post("/api/stores", values);
+      // Átirányítás az újonnan létrehozott üzlet oldalára
       window.location.assign(`/${response.data.id}`);
+      // Sikeres üzenet megjelenítése
       toast.success("Üzlet létrehozva");
     } catch (error) {
+      // Hiba esetén hibaüzenet megjelenítése
       toast.error("Valami hiba történt");
     } finally {
+      // Betöltés állapotának visszaállítása
       setLoading(false);
     }
   };
 
+  // Modális ablak és űrlap renderelése
   return (
     <Modal
       title="Üzlet létrehozása"
@@ -62,8 +74,10 @@ export const StoreModal = () => {
       <div>
         <div className="space-y-4 py-2 pb-4">
           <div className="space-y-2">
+            {/* Űrlap komponens használata */}
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
+                {/* Űrlap mezője a név megadásához */}
                 <FormField
                   control={form.control}
                   name="name"
@@ -81,6 +95,7 @@ export const StoreModal = () => {
                     </FormItem>
                   )}
                 />
+                {/* Űrlap gombjai: Kilépés és Folytatás */}
                 <div className="pt-6 space-x-2 flex items-center justify-end w-full">
                   <Button
                     disabled={loading}

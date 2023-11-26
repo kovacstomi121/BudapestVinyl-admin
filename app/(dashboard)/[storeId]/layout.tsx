@@ -37,9 +37,6 @@ export default async function DashboardLayout({
     redirect("/");
   }
 
-  // Router objektum lekérése a useRouter hook segítségével
-  const router = useRouter();
-
   // A komponens visszatérési értéke: az elrendezés megjelenítése
   return (
     <div className="h-full">

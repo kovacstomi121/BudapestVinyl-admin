@@ -26,12 +26,7 @@ export const SidebarRoutes = () => {
       label: "Hírdetőtáblák",
       active: pathname === `/${params.storeId}/billboards`,
     },
-    {
-      icon: List,
-      href: `/${params.storeId}/categories`,
-      label: "Kategóriák",
-      active: pathname === `/${params.storeId}/categories`,
-    },
+
     {
       icon: List,
       href: `/${params.storeId}/products`,

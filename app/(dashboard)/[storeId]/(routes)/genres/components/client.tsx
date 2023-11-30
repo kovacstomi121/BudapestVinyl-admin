@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
-import { ApiList } from "@/components/ui/api-list";
 
 import { columns, GenreColumn } from "./columns";
 
@@ -38,11 +37,6 @@ export const GenreClient: React.FC<GenreClientProps> = ({ data }) => {
       <Separator />
       {/* Műfajok táblázat */}
       <DataTable searchKey="name" columns={columns} data={data} />
-      {/* API szekció fejléce */}
-      <Heading title="API" description="API hívások" />
-      <Separator />
-      {/* API lista */}
-      <ApiList entityName="genres" entityIdName="genreId" />
     </>
   );
 };

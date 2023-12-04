@@ -42,7 +42,7 @@ const Navbar = async () => {
         {/* Üzletek váltója */}
         <StoreSwitcher items={stores} />
 
-        <div className="md:ml-auto flex items-center md:space-x-4">
+        <div className="ml-auto flex items-center space-x-4">
           {/* Téma kapcsoló */}
           <ThemeToggle />
           {/* Felhasználói fiók navigáció */}

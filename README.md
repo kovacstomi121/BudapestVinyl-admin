@@ -29,6 +29,12 @@ STRIPE_API_KEY=
 FRONTEND_STORE_URL=http://localhost:3001
 STRIPE_WEBHOOK_SECRET=
 ```
+
+Összekapcsolás PlanetScale-lel és Prisma push
+```bash
+npx prisma generate
+npx prisma db push
+```
 Futtatás:
 
 ```bash

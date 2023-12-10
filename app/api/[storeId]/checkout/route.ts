@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 
 import { stripe } from "@/lib/stripe";
 import { prismadb } from "@/lib/prismadb";
-import { Item } from "@radix-ui/react-dropdown-menu";
 
 //Fizetés
 
@@ -70,10 +69,9 @@ export async function POST(
       },
     },
   });
-
   //Az alábbi sorok létrehozzák a Stripe fizetési munkamenetet a "line_items" listával és a rendelési adatokkal.
   const session = await stripe.checkout.sessions.create({
-    line_items: [],
+    line_items,
     mode: "payment",
     billing_address_collection: "required",
     phone_number_collection: {

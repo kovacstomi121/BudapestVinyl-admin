@@ -56,7 +56,7 @@ model Billboard {
     artist      String
     price       Decimal
     releaseYear String
-    quantity    Int       @default(1)
+    quantity    Int       @default(10)
     isFeatured  Boolean   @default(false)
     isArchived  Boolean   @default(false)
     genreId     String    // Foreign Key to Genre

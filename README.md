@@ -47,14 +47,14 @@ A fenti lépések után a Next.js alkalmazásod elérhető lesz a böngészőben
 
 Ez a projekt a next/font használatával automatikusan optimalizálja és betölti az Inter betűtípust, egyedi Google Fontot.
 
-További információkért
+##További információkért
 A Next.js-ről további információkat a következő forrásokban találhatsz:
 
-Next.js Dokumentáció - ismerd meg a Next.js funkcióit és API-ját.
+##Next.js Dokumentáció - ismerd meg a Next.js funkcióit és API-ját.
 Learn Next.js - interaktív Next.js tutorial.
 Ellenőrizheted a Next.js GitHub repository-t - visszajelzéseid és hozzájárulásaid is üdvözöljük!
 
-Vercelre telepítés
+##Vercelre telepítés
 A Next.js alkalmazásod legegyszerűbben a Vercel Platform segítségével telepítheted, amelyet a Next.js készítői hoztak létre.
 
 Tekintsd meg a Next.js telepítési dokumentációját további részletekért. "# BudapestVinyl-admin" "# BudapestVinyl-admin" "# BudapestVinyl-admin" "# BudapestVinyl-admin" "# BudapestVinyl-admin" "# BudapestVinyl-adminDashboard

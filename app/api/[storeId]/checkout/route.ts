@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 import { stripe } from "@/lib/stripe";
 import { prismadb } from "@/lib/prismadb";
+import { Item } from "@radix-ui/react-dropdown-menu";
 
 //Fizetés
 
@@ -23,7 +24,7 @@ export async function POST(
   req: Request,
   { params }: { params: { storeId: string } }
 ) {
-  const { productIds, quantity } = await req.json();
+  const { productIds } = await req.json();
 
   if (!productIds || productIds.length === 0) {
     return new NextResponse("Termékazonosítók megadása kötelező", {
@@ -42,12 +43,8 @@ export async function POST(
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
   products.forEach((product) => {
-    const orderedQuantity =
-      quantity.find(
-        (q: { productId: string; value: number }) => q.productId === product.id
-      )?.value || 1;
     line_items.push({
-      quantity: orderedQuantity,
+      quantity: product.quantity,
       price_data: {
         currency: "HUF",
         product_data: {
@@ -76,7 +73,7 @@ export async function POST(
 
   //Az alábbi sorok létrehozzák a Stripe fizetési munkamenetet a "line_items" listával és a rendelési adatokkal.
   const session = await stripe.checkout.sessions.create({
-    line_items,
+    line_items: [],
     mode: "payment",
     billing_address_collection: "required",
     phone_number_collection: {

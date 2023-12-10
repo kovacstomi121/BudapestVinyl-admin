@@ -48,25 +48,26 @@ model Billboard {
 }
 
 
-model Product {
-  id          String    @id @default(uuid())
-  storeId     String    // Foreign Key to Store
-  store       Store     @relation("StoreToProduct", fields: [storeId], references: [id])
-  name        String
-  artist      String
-  price       Decimal
-  releaseYear String
-  isFeatured  Boolean   @default(false)
-  isArchived  Boolean   @default(false)
-  genreId     String    // Foreign Key to Genre
-  genre       Genre      @relation(fields: [genreId], references: [id])
-  images      Image[]   // Relation to Image model
-  orderItems  OrderItem[]   // Relation to Order model
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  model Product {
+    id          String    @id @default(uuid())
+    storeId     String    // Foreign Key to Store
+    store       Store     @relation("StoreToProduct", fields: [storeId], references: [id])
+    name        String
+    artist      String
+    price       Decimal
+    releaseYear String
+    quantity    Int       @default(1)
+    isFeatured  Boolean   @default(false)
+    isArchived  Boolean   @default(false)
+    genreId     String    // Foreign Key to Genre
+    genre       Genre      @relation(fields: [genreId], references: [id])
+    images      Image[]   // Relation to Image model
+    orderItems  OrderItem[]   // Relation to Order model
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
 
-  @@index([storeId])
-  @@index([genreId])
+    @@index([storeId])
+    @@index([genreId])
 
 }
 

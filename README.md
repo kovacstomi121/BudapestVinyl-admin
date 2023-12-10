@@ -1,5 +1,6 @@
 Ez egy Next.js projekt, ami a [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) segítségével lett létrehozva.
 Ez maga a weboldal Vercelen: https://budapest-vinyl-admin.vercel.app/
+Ha lokálisan szeretnéd futtatni
 ## Kezdés
 Telepítsd a Csomagokat:
 Nyisd meg a projekt főkönyvtárában a terminált, majd futtasd le az alábbi parancsokat a csomagok telepítéséhez:
@@ -7,7 +8,7 @@ Nyisd meg a projekt főkönyvtárában a terminált, majd futtasd le az alábbi 
 npm i
 ```
 
-Állítsd össze a .env fájlt
+Állítsd össze a .env fájlt, pontos adatok a 
 ```bash
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=

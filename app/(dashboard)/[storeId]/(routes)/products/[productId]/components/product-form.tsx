@@ -85,6 +85,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         price: 0,
         genreId: "",
         releaseYear: "",
+        quantity: 0,
         isFeatured: false,
         isArchived: false,
       };
@@ -245,6 +246,24 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                       type="number"
                       disabled={loading}
                       placeholder=""
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="md:grid md:grid-cols-3 gap-8">
+            <FormField
+              control={form.control}
+              name="quantity"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Darabszám</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={loading}
+                      placeholder="Darabszám"
                       {...field}
                     />
                   </FormControl>

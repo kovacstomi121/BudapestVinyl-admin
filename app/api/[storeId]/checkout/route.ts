@@ -42,12 +42,9 @@ export async function POST(
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
   products.forEach((product) => {
-    const orderedQuantity =
-      quantity.find(
-        (q: { productId: string; value: number }) => q.productId === product.id
-      )?.value || 1;
+    
     line_items.push({
-      quantity: orderedQuantity,
+      quantity: 1,
       price_data: {
         currency: "HUF",
         product_data: {

@@ -40,6 +40,7 @@ const formSchema = z.object({
   images: z.object({ url: z.string() }).array(),
   price: z.coerce.number().min(1),
   releaseYear: z.string().min(1),
+  quantity: z.coerce.number().min(1),
   genreId: z.string().min(1),
   isFeatured: z.boolean().default(false).optional(),
   isArchived: z.boolean().default(false).optional(),
@@ -85,7 +86,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         price: 0,
         genreId: "",
         releaseYear: "",
-        quantity: 0,
         isFeatured: false,
         isArchived: false,
       };
@@ -246,24 +246,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                       type="number"
                       disabled={loading}
                       placeholder=""
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="md:grid md:grid-cols-3 gap-8">
-            <FormField
-              control={form.control}
-              name="quantity"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Darabszám</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="Darabszám"
                       {...field}
                     />
                   </FormControl>

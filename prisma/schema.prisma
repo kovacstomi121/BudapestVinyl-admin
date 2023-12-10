@@ -56,7 +56,6 @@ model Product {
   artist      String
   price       Decimal
   releaseYear String
-  quantity    String
   isFeatured  Boolean   @default(false)
   isArchived  Boolean   @default(false)
   genreId     String    // Foreign Key to Genre
@@ -92,7 +91,6 @@ model OrderItem {
   order     Order   @relation(fields: [orderId], references: [id])
   productId String  // Foreign Key to Product
   product   Product @relation(fields: [productId], references: [id])
-
   @@index([orderId])
   @@index([productId])
 

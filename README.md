@@ -8,7 +8,7 @@ Nyisd meg a projekt főkönyvtárában a terminált, majd futtasd le az alábbi 
 npm i
 ```
 
-Állítsd össze a .env fájlt
+Állítsd össze a .env fájlt, pontos adatokat a dolgoza	Admin oldal és bolt összecsatolása fejezetében találod
 ```bash
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=

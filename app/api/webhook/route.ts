@@ -60,18 +60,6 @@ export async function POST(req: Request) {
 
     // Megrendelt termékek azonosítóinak lekérése
     const productIds = order.orderItems.map((orderItem) => orderItem.productId);
-
-    // Megrendelt termékek archiválása
-    await prismadb.product.updateMany({
-      where: {
-        id: {
-          in: [...productIds],
-        },
-      },
-      data: {
-        isArchived: true,
-      },
-    });
   }
 
   // Sikeres válasz létrehozása, státusz 200
